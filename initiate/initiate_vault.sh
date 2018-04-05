@@ -3,10 +3,10 @@
 # Initialize
 
 VAULT_IP=`docker inspect --format='{{ .NetworkSettings.Networks.mysqlbastion_default.IPAddress }}' vault` ; [ `cat /etc/hosts | grep vault | wc -l` -eq 0 ] && echo -e "$VAULT_IP\tvault" >> /etc/hosts
-export VAULT_ADDR=http://vault:9200
+export VAULT_ADDR=http://vault:8200
 
 if [ ! -e /root/vault_details ]; then
-	vault init > /root/vault_details	
+	vault init > /root/vault_details
 fi
 
 OUTPUT=`cat /root/vault_details`
@@ -14,7 +14,7 @@ OUTPUT=`cat /root/vault_details`
 echo "Exporting Token for Root Access"
 export VAULT_TOKEN=$(echo "$OUTPUT" | grep 'Root Token' | awk -F': ' '{print $2}' )
 
-if [ `vault status | grep "Sealed: true" | wc -l` -eq 1 ]; then
+if [ `vault status | grep "Sealed"| grep "true" | wc -l` -eq 1 ]; then
 	echo "Vault found Sealed.  Unsealing the Vault"
 	vault unseal $(echo "$OUTPUT" | grep 'Key 1' | awk -F': ' '{print $2}')
 	vault unseal $(echo "$OUTPUT" | grep 'Key 2' | awk -F': ' '{print $2}')

@@ -212,7 +212,7 @@ INSERT INTO hosts(host,ip,port) VALUES('server2.fqdn.com','192.168.0.21',3301);
 In order to interact with vault you have to make sure that the two environment variables have been exported for VAULT_ADDR and VAULT_TOKEN.  We can configure the VAULT_ADDR to be exported for the root user in /root/.bashrc and add the command to the bottom of the script.  Or you can run it manually each time.  
 
 ```bash
-echo "export VAULT_ADDR=http://vault:9200" >> /root/.bashrc
+echo "export VAULT_ADDR=http://vault:8200" >> /root/.bashrc
 ```
 
 VAULT_TOKEN should be stored like a password as it will grant anyone that has it full access to vault.  This shouldn't be configured to load automatically for security reasons.  It should be run each time an admin wants to login and configure Vault.  Remember your token was initially stored in /root/vault_details
@@ -432,7 +432,7 @@ mysql --login-path=mysql
 
 ## Using the Bastion/Proxy
 
-Now that everything should be configured you can use the following to use the environment.  The end user will need the Vault client and have it configured to point to the Bastion/Proxy server on port 9200 which is the listening port for Vault.  DO NOT put the Vault Token on the end user.  That is only used to administor the vault server.
+Now that everything should be configured you can use the following to use the environment.  The end user will need the Vault client and have it configured to point to the Bastion/Proxy server on port 8200 which is the listening port for Vault.  DO NOT put the Vault Token on the end user.  That is only used to administor the vault server.
 
 User Login to Vault using LDAP
 
